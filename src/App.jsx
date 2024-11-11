@@ -26,14 +26,16 @@ function App() {
     });
   }
 
-  function handleDeleteTask(taskId) {
-    setProjectsState((prevState) => ({
-      ...prevState,
-      tasks: prevState.tasks.filter((task) => task.id !== taskId),
-    }));
+  function handleDeleteTask(id) {
+    setProjectsState((prevState) => {
+      return{...prevState,
+        tasks: prevState.tasks.filter(
+          (tasks) => tasks.id !== id),
+        }; 
+    });
   }
 
-  function handleStartAddProject () {
+  function handleStartAddProject() {
     setProjectsState((prevState) => ({
       ...prevState,
       selectedProjectId: null,
@@ -76,9 +78,6 @@ function App() {
       projects: prevState.projects.filter(
         (project) => project.id !== prevState.selectedProjectId
       ),
-      tasks: prevState.tasks.filter(
-        (task) => task.projectId !== prevState.selectedProjectId
-      ), // Remove tasks of the deleted project
     }));
   }
 
@@ -112,6 +111,7 @@ function App() {
         onStartAddProject={handleStartAddProject}
         projects={projectsState.projects}
         onSelectProject={handleSelectProject}
+        selectedProjectId={projectsState.selectedProjectId}
       />
       {content}
     </main>
