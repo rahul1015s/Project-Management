@@ -5,23 +5,26 @@ import NoProjectSelected from "./Components/NoProjectSelected.jsx";
 import SelectedProject from "./Components/SelectedProject.jsx";
 
 function App() {
+   // yeh hai initial state jisme selectedProjectId (jo project select hua hai), 
+  // projects ki list, aur tasks ki list store hogi.
   const [projectsState, setProjectsState] = useState({
-    selectedProjectId: undefined,
-    projects: [],
-    tasks: [],
+    selectedProjectId: undefined, //Agar koi project selected nahi hai, toh undefined
+    projects: [], // Yeh sab projects ki list hai
+    tasks: [], // Yeh tasks ki list hai
   });
 
+  // Task add karne ka function, jo selected project ke liye task create karega
   function handleAddTask(text) {
     setProjectsState((prevState) => {
       const taskId = Date.now(); // Using timestamp as unique ID
       const newTask = {
         text,
-        projectId: prevState.selectedProjectId,
+        projectId: prevState.selectedProjectId, // Yeh task kis project ka hai
         id: taskId,
       };
       return {
         ...prevState,
-        tasks: [newTask, ...prevState.tasks],
+        tasks: [newTask, ...prevState.tasks], // Naya task sab tasks ke saath add karenge
       };
     });
   }
@@ -42,17 +45,18 @@ function App() {
     }));
   };
 
+   // Jab project ko select karna ho toh yeh function call hoga
   function handleSelectProject(id) {
     setProjectsState((prevState) => ({
       ...prevState,
-      selectedProjectId: id,
+      selectedProjectId: id, // Yeh selectedProjectId ko update kar dega
     }));
   }
 
   function handleCancleAddProject() {
     setProjectsState((prevState) => ({
       ...prevState,
-      selectedProjectId: undefined,
+      selectedProjectId: undefined, // Yaha cancel karte time koi project select nahi rahega
     }));
   }
 
@@ -85,6 +89,7 @@ function App() {
     (project) => project.id === projectsState.selectedProjectId
   );
 
+  // Jo content render hoga wo yeh decide karega, selected project ke hisaab se
   let content = (
     <SelectedProject
       project={selectedProject}
